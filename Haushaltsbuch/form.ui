@@ -247,7 +247,7 @@
      </property>
     </item>
    </widget>
-   <widget class="QLabel" name="label">
+   <widget class="QLabel" name="test_lbl">
     <property name="geometry">
      <rect>
       <x>220</x>
@@ -257,7 +257,46 @@
      </rect>
     </property>
     <property name="text">
-     <string>TextLabel</string>
+     <string>hey</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="ausgabeBtn">
+    <property name="geometry">
+     <rect>
+      <x>480</x>
+      <y>280</y>
+      <width>93</width>
+      <height>29</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>PushButton</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="saveBtn">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>121</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Speichern</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="openBtn">
+    <property name="geometry">
+     <rect>
+      <x>120</x>
+      <y>0</y>
+      <width>121</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Öffnen</string>
     </property>
    </widget>
   </widget>
@@ -267,7 +306,7 @@
      <x>0</x>
      <y>0</y>
      <width>1920</width>
-     <height>22</height>
+     <height>25</height>
     </rect>
    </property>
   </widget>

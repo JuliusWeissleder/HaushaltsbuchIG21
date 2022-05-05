@@ -51,15 +51,13 @@ class MainFrm(Base, Form):
         print(ausgaben_insgesamt)
         self.test_lbl.setText(str(ausgaben_insgesamt))
 
-
     @Core.Slot()
-    def on_openBtn_clicked(self):
+    def on_actionOpen_clicked(self):
         filename = QFileDialog.getOpenFileName()[0]
         with open(filename,"r+") as f:
             objectsDict = json.loads(f.read())
 
             self.test_lbl.setText(Ausgabe.fromDict(objectsDict).__str__())
-
 
     @Core.Slot()
     def on_saveBtn_clicked(self):

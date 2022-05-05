@@ -13,17 +13,13 @@ from PySide6.QtWidgets import QFileDialog
 from datetime import date, datetime
 from Classes.dataklassen import Ausgabe
 
-
 QT_API = "PySide6"
-
-
-
 UIFilename = "form.ui"
 ProjectDir = os.path.dirname(os.path.abspath(__file__))
 Form, Base = loadUiType(os.path.join(ProjectDir, UIFilename))
 
-def umlaute_zu_buchstaben(umlaut):
-    umlaut = ["ä", "ü", "ö", "ß"]
+ausgaben_liste = []
+einnamen_liste = []
 
 
 
@@ -31,14 +27,30 @@ class MainFrm(Base, Form):
     def __init__(self, parent=None):
         super(self.__class__, self).__init__(parent)
         self.setupUi(self)
-        ausgabe:
+
+
+
+
     @Core.Slot()
     def on_ausgabeBtn_clicked(self):
-
-        ausgaben_datum = self.ausgaben_date.date().toPyDateTime()
+        ausgaben_artikel = self.ausgaben_artikel.text()
+        ausgaben_preis =self.ausgaben_preis.text()
+        #ausgaben_datum = self.ausgaben_date.date().toPyDateTime()
         ausgaben_kategorie = self.ausgaben_kat.currentText()
         ausgaben_mwst = self.ausgaben_mwst.currentText()
-        self.test_lbl.setText(ausgaben_datum)
+        einkommen_höhe = self.einkommen_hoehe.text()
+        einnamen_liste.append(einkommen_höhe)
+        ausgaben_liste.append(ausgaben_preis)
+        #self.test_lbl.setText(ausgaben_datum)
+        ausgaben_insgesamt = 0.00
+        print(ausgaben_insgesamt)
+        for i in ausgaben_liste:
+            print(i)
+            i = i.replace("€", "")
+            ausgaben_insgesamt = ausgaben_insgesamt-float(i)
+        print(ausgaben_insgesamt)
+        self.test_lbl.setText(str(ausgaben_insgesamt))
+
 
     @Core.Slot()
     def on_openBtn_clicked(self):

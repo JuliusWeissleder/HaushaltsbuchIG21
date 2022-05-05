@@ -5,13 +5,19 @@
 # Copyright © 2022 by SRE
 import sys
 import os
-import json
+
 from PySide6.QtUiTools import loadUiType
 from PySide6 import QtCore as Core
 from PySide6 import QtWidgets
-from PySide6.QtWidgets import QFileDialog
+from PySide6.QtWidgets import QFileDialog, QWidget
+from PySide6.QtCore import QRect
+from PySide6.QtGui import QPainter
+
+
+import json
 from datetime import date, datetime
-from Classes.dataklassen import Ausgabe
+
+from Classes.dataklassen import Ausgabe, Einahme, Berechnung
 
 QT_API = "PySide6"
 UIFilename = "form.ui"
@@ -27,8 +33,10 @@ class MainFrm(Base, Form):
     def __init__(self, parent=None):
         super(self.__class__, self).__init__(parent)
         self.setupUi(self)
-
-
+        self.actionOpen.triggered.connect(self.openFile)
+        self.actionSave.triggered.connect(self.saveFile)
+        self.actionNew.triggered.connect(self.newProject)
+        self.berechnung = None
 
 
     @Core.Slot()
@@ -51,19 +59,30 @@ class MainFrm(Base, Form):
         print(ausgaben_insgesamt)
         self.test_lbl.setText(str(ausgaben_insgesamt))
 
-    @Core.Slot()
-    def on_actionOpen_clicked(self):
+    def openFile(self):
         filename = QFileDialog.getOpenFileName()[0]
         with open(filename,"r+") as f:
             objectsDict = json.loads(f.read())
 
             self.test_lbl.setText(Ausgabe.fromDict(objectsDict).__str__())
 
-    @Core.Slot()
-    def on_saveBtn_clicked(self):
+    def saveFile(self):
         filename = QFileDialog.getSaveFileName()[0]
         with open(filename,"w+") as f:
             f.write(json.dumps(Ausgabe("Du bist dumm", date.today()).toDict()))
+
+    def newProject(self):
+        self.p = PopUp()
+        self.p.show()
+        self.berechnung = Berechnung()
+
+
+class PopUp(QtWidgets.QWidget):
+    def __init__(self):
+        QWidget.__init__(self)
+        self.resize(400, 300)
+        self
+
 
 
 if __name__ == "__main__":

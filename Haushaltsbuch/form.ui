@@ -496,14 +496,14 @@
     <property name="title">
      <string>&amp;File</string>
     </property>
-    <addaction name="action_new"/>
+    <addaction name="actionNew"/>
     <addaction name="actionOpen"/>
     <addaction name="actionSave"/>
    </widget>
    <addaction name="menu_File"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
-  <action name="action_new">
+  <action name="actionNew">
    <property name="text">
     <string>&amp;new</string>
    </property>

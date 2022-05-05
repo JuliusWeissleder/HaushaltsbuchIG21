@@ -38,7 +38,6 @@ class MainFrm(Base, Form):
         self.actionNew.triggered.connect(self.newProject)
         self.berechnung = None
 
-
     @Core.Slot()
     def on_ausgabeBtn_clicked(self):
         ausgaben_artikel = self.ausgaben_artikel.text()
@@ -61,15 +60,13 @@ class MainFrm(Base, Form):
 
     def openFile(self):
         filename = QFileDialog.getOpenFileName()[0]
-        with open(filename,"r+") as f:
-            objectsDict = json.loads(f.read())
-
-            self.test_lbl.setText(Ausgabe.fromDict(objectsDict).__str__())
+        with open(filename, "r+") as f:
+            self.berechnung = json.loads(f.read())
 
     def saveFile(self):
         filename = QFileDialog.getSaveFileName()[0]
-        with open(filename,"w+") as f:
-            f.write(json.dumps(Ausgabe("Du bist dumm", date.today()).toDict()))
+        with open(filename, "w+") as f:
+            f.write(json.dumps(self.berechnung.toDict()))
 
     def newProject(self):
         self.p = PopUp(self)
@@ -81,15 +78,15 @@ class MainFrm(Base, Form):
 class PopUp(QtWidgets.QWidget):
     def __init__(self, main):
         QWidget.__init__(self)
-        self.resize(200, 200)
+        self.resize(200, 175)
         self.nametextfield = QTextEdit(self)
-        self.nametextfield.setGeometry(QRect(0, 0, 200, 75))
+        self.nametextfield.setGeometry(QRect(5, 25, 190, 30))
         self.nametextfield.setText("Name des Projektes")
         self.authortextfield = QTextEdit(self)
-        self.authortextfield.setGeometry(QRect(0, 75, 200, 75))
+        self.authortextfield.setGeometry(QRect(5, 75, 190, 30))
         self.authortextfield.setText("Author des Projektes")
         self.createbtn = QPushButton(self, text="create Project")
-        self.createbtn.setGeometry(QRect(0, 150, 200, 50))
+        self.createbtn.setGeometry(QRect(5, 125, 190, 40))
         self.createbtn.clicked.connect(self.createBerechnung)
         self.authortextfield.show()
         self.nametextfield.show()

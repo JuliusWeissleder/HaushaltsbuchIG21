@@ -1,18 +1,13 @@
 #!/usr/bin/python3
 
-# This Python file uses the following encoding: utf-8
-# main_widget.py BSZET-DD Template
-# Copyright © 2022 by SRE
 import sys
 import os
 
 from PySide6.QtUiTools import loadUiType
 from PySide6 import QtCore as Core
 from PySide6 import QtWidgets
-from PySide6.QtWidgets import QFileDialog, QWidget, QPushButton, QTextEdit
+from PySide6.QtWidgets import QFileDialog, QWidget, QPushButton, QTextEdit, QMessageBox
 from PySide6.QtCore import QRect
-from PySide6.QtGui import QPainter
-
 
 import json
 from datetime import date, datetime
@@ -36,7 +31,41 @@ class MainFrm(Base, Form):
         self.actionOpen.triggered.connect(self.openFile)
         self.actionSave.triggered.connect(self.saveFile)
         self.actionNew.triggered.connect(self.newProject)
+        self.btn_add_ausgaben.clicked.connect(self.newAusgabe)
+        self.btn_add_einkommen.clicked.connect(self.newEinkommen)
         self.berechnung = None
+
+    def newEinkommen(self):
+        try:
+            self.berechnung.addEinahme(
+                Einahme(
+                    int(self.einkommen_hoehe.text()),
+                    str(self.einkommen_kat.currentText())
+                )
+            )
+        except AttributeError:
+            QMessageBox.information(
+                self,
+                "No Projekt",
+                "U haven't created a Projekt yet.\n Create one with File -> new",
+            )
+
+    def newAusgabe(self):
+        try:
+            self.berechnung.addAusgabe(
+                Ausgabe(
+                    int(self.einkommen_hoehe.text()),
+                    int(self.ausgaben_mwst.text()),
+                    str(self.ausgaben_kat.currentText()),
+                    str(self.ausgaben_artikel.text())
+                )
+            )
+        except AttributeError:
+            QMessageBox.information(
+                self,
+                "No Projekt",
+                "U haven't created a Projekt yet.\n Create one with File -> new"
+            )
 
     @Core.Slot()
     def on_ausgabeBtn_clicked(self):
@@ -61,12 +90,12 @@ class MainFrm(Base, Form):
     def openFile(self):
         filename = QFileDialog.getOpenFileName()[0]
         with open(filename, "r+") as f:
-            self.berechnung = json.loads(f.read())
+            self.berechnung = Berechnung.fromDict(json.loads(f.read()))
 
     def saveFile(self):
         filename = QFileDialog.getSaveFileName()[0]
         with open(filename, "w+") as f:
-            f.write(json.dumps(self.berechnung.toDict()))
+            f.write(json.dumps(self.berechnung.toDict(), indent=4))
 
     def newProject(self):
         self.p = PopUp(self)
@@ -79,20 +108,23 @@ class PopUp(QtWidgets.QWidget):
     def __init__(self, main):
         QWidget.__init__(self)
         self.resize(200, 175)
+        self.main = main
+        self.show()
+
         self.nametextfield = QTextEdit(self)
         self.nametextfield.setGeometry(QRect(5, 25, 190, 30))
         self.nametextfield.setText("Name des Projektes")
+        self.nametextfield.show()
+
         self.authortextfield = QTextEdit(self)
         self.authortextfield.setGeometry(QRect(5, 75, 190, 30))
         self.authortextfield.setText("Author des Projektes")
+        self.authortextfield.show()
+
         self.createbtn = QPushButton(self, text="create Project")
         self.createbtn.setGeometry(QRect(5, 125, 190, 40))
         self.createbtn.clicked.connect(self.createBerechnung)
-        self.authortextfield.show()
-        self.nametextfield.show()
         self.createbtn.show()
-        self.show()
-        self.main = main
 
     def createBerechnung(self):
         self.main.setProject(

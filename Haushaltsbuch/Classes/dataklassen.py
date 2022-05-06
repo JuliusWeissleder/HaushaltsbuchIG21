@@ -10,13 +10,13 @@ def simple(o):
 
 @dataclass
 class Ausgabe(object):
-    name: str
     wert: int
     mwst: str
     katagorie: str
     artikel: str
-    menge: int
-    datum: date
+    name: str = None
+    menge: int = None
+    datum: date = date.today()
 
     def toDict(self):
         newdict = self.__dict__.copy()
@@ -28,11 +28,11 @@ class Ausgabe(object):
         return Ausgabe(**d)
 
 @dataclass
-class Einahme:
-    name: str
+class Einahme(object):
     wert: int
     katagorie: str
-    datum: date
+    name: str = None
+    datum: date = date.today()
 
     def toDict(self):
         newdict = self.__dict__.copy()

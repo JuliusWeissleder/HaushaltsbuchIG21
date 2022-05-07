@@ -51,6 +51,7 @@ class Berechnung(object):
     author: str = "Kein Author"
     einnahmen: list[Einahme] = field(default_factory=list)
     ausgaben: list[Ausgabe] = field(default_factory=list)
+    filename: str = None
 
     def toDict(self):
         newdict = self.__dict__.copy()
@@ -68,11 +69,16 @@ class Berechnung(object):
     def addEinahme(self, e: Einahme):
         self.einnahmen.append(e)
 
-    def getEinnahme(self):
-        return self.einnahmen
-
     def addAusgabe(self, a: Ausgabe):
-        self.ausgabesn.append(a)
+        self.ausgaben.append(a)
 
-    def getAusgaben(self):
-        return self.ausgaben
+    def getDifferenz(self) -> int:
+        geldEinnahmen = 0
+        for e in self.einnahmen:
+            geldEinnahmen += e.wert
+
+        geldAusgaben = 0
+        for a in self.ausgaben:
+            geldAusgaben += a.wert
+
+        return geldEinnahmen - geldAusgaben

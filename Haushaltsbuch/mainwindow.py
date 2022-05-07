@@ -6,8 +6,9 @@ import os
 from PySide6.QtUiTools import loadUiType
 from PySide6 import QtCore as Core
 from PySide6 import QtWidgets
-from PySide6.QtWidgets import QFileDialog, QWidget, QPushButton, QTextEdit, QMessageBox
+from PySide6.QtWidgets import QFileDialog, QWidget, QPushButton, QLineEdit, QMessageBox, QLabel
 from PySide6.QtCore import QRect
+from PySide6.QtGui import QShortcut, QKeySequence
 
 import json
 from datetime import date, datetime
@@ -19,21 +20,36 @@ UIFilename = "form.ui"
 ProjectDir = os.path.dirname(os.path.abspath(__file__))
 Form, Base = loadUiType(os.path.join(ProjectDir, UIFilename))
 
-ausgaben_liste = []
-einnamen_liste = []
-
 
 class MainFrm(Base, Form):
     def __init__(self, parent=None):
         super(self.__class__, self).__init__(parent)
-        self.p = None
         self.setupUi(self)
+
+        self.openSC = QShortcut(QKeySequence("Ctrl+o"), self)
+        self.openSC.activated.connect(self.openFile)
+        self.newSC = QShortcut(QKeySequence("Ctrl+n"), self)
+        self.newSC.activated.connect(self.newProject)
+        self.saveSC = QShortcut(QKeySequence("Ctrl+s"), self)
+        self.saveSC.activated.connect(self.fileSave)
+        self.saveAsSC = QShortcut(QKeySequence("Ctrl+Shift+s"), self)
+        self.saveAsSC.activated.connect(self.fileSaveAs)
+
         self.actionOpen.triggered.connect(self.openFile)
-        self.actionSave.triggered.connect(self.saveFile)
+        self.actionSave.triggered.connect(self.fileSave)
         self.actionNew.triggered.connect(self.newProject)
+
         self.btn_add_ausgaben.clicked.connect(self.newAusgabe)
         self.btn_add_einkommen.clicked.connect(self.newEinkommen)
+
         self.berechnung = None
+
+    def noProjectExecption(self):
+        QMessageBox.information(
+            self,
+            "No Projekt",
+            "U haven't created a Projekt yet.\n Create one with File -> new",
+        )
 
     def newEinkommen(self):
         try:
@@ -44,81 +60,74 @@ class MainFrm(Base, Form):
                 )
             )
         except AttributeError:
-            QMessageBox.information(
-                self,
-                "No Projekt",
-                "U haven't created a Projekt yet.\n Create one with File -> new",
-            )
+            self.noProjectExecption()
+        self.werteAus()
 
     def newAusgabe(self):
         try:
             self.berechnung.addAusgabe(
                 Ausgabe(
-                    int(self.einkommen_hoehe.text()),
-                    int(self.ausgaben_mwst.text()),
+                    int(self.ausgaben_preis.text()),
+                    int(str(self.ausgaben_mwst.currentText()).replace("%", "")),
                     str(self.ausgaben_kat.currentText()),
                     str(self.ausgaben_artikel.text())
                 )
             )
         except AttributeError:
-            QMessageBox.information(
-                self,
-                "No Projekt",
-                "U haven't created a Projekt yet.\n Create one with File -> new"
-            )
+            self.noProjectExecption()
+        self.werteAus()
 
-    @Core.Slot()
-    def on_ausgabeBtn_clicked(self):
-        ausgaben_artikel = self.ausgaben_artikel.text()
-        ausgaben_preis =self.ausgaben_preis.text()
-        #ausgaben_datum = self.ausgaben_date.date().toPyDateTime()
-        ausgaben_kategorie = self.ausgaben_kat.currentText()
-        ausgaben_mwst = self.ausgaben_mwst.currentText()
-        einkommen_höhe = self.einkommen_hoehe.text()
-        einnamen_liste.append(einkommen_höhe)
-        ausgaben_liste.append(ausgaben_preis)
-        #self.test_lbl.setText(ausgaben_datum)
-        ausgaben_insgesamt = 0.00
-        print(ausgaben_insgesamt)
-        for i in ausgaben_liste:
-            print(i)
-            i = i.replace("€", "")
-            ausgaben_insgesamt = ausgaben_insgesamt-float(i)
-        print(ausgaben_insgesamt)
-        self.test_lbl.setText(str(ausgaben_insgesamt))
+    def werteAus(self):
+        self.lbl_test.setText(
+            str(self.berechnung.getDifferenz())
+        )
 
     def openFile(self):
         filename = QFileDialog.getOpenFileName()[0]
         with open(filename, "r+") as f:
             self.berechnung = Berechnung.fromDict(json.loads(f.read()))
+            print(self.berechnung)
 
-    def saveFile(self):
-        filename = QFileDialog.getSaveFileName()[0]
-        with open(filename, "w+") as f:
+    def writeToFile(self):
+        with open(self.berechnung.filename, "w+") as f:
             f.write(json.dumps(self.berechnung.toDict(), indent=4))
 
+    def fileSave(self):
+        try:
+            if self.berechnung.filename is None:
+                self.berechnung.filename = QFileDialog.getSaveFileName()[0]
+        except AttributeError:
+            self.noProjectExecption()
+        self.writeToFile()
+
+    def fileSaveAs(self):
+        try:
+            self.berechnung.filename = QFileDialog.getSaveFileName()[0]
+        except AttributeError:
+            self.noProjectExecption()
+        self.writeToFile()
+
     def newProject(self):
-        self.p = PopUp(self)
+        self.npw = NewProjectWindow(self)
 
     def setProject(self, b):
         self.berechnung = b
 
 
-class PopUp(QtWidgets.QWidget):
+class NewProjectWindow(QtWidgets.QWidget):
     def __init__(self, main):
         QWidget.__init__(self)
         self.resize(200, 175)
         self.main = main
+        self.setWindowTitle("New Project")
         self.show()
 
-        self.nametextfield = QTextEdit(self)
+        self.nametextfield = QLineEdit("Name des Projektes", self)
         self.nametextfield.setGeometry(QRect(5, 25, 190, 30))
-        self.nametextfield.setText("Name des Projektes")
         self.nametextfield.show()
 
-        self.authortextfield = QTextEdit(self)
+        self.authortextfield = QLineEdit("Author des Projektes", self)
         self.authortextfield.setGeometry(QRect(5, 75, 190, 30))
-        self.authortextfield.setText("Author des Projektes")
         self.authortextfield.show()
 
         self.createbtn = QPushButton(self, text="create Project")
@@ -129,8 +138,8 @@ class PopUp(QtWidgets.QWidget):
     def createBerechnung(self):
         self.main.setProject(
             Berechnung(
-                name=self.nametextfield.toPlainText(),
-                author=self.authortextfield.toPlainText()
+                name=self.nametextfield.text(),
+                author=self.authortextfield.text()
             )
         )
         self.close()

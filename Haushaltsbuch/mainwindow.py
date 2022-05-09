@@ -113,6 +113,12 @@ class MainFrm(Base, Form):
     def setProject(self, b):
         self.berechnung = b
 
+    #@Core.Slot()
+    #def on_ausgabenKat_currentTextChanged(self):
+        #match self.ausgabenKat.currentText:
+            #case "Kategorie Auswahl":
+                #self.ausgabenKat.setCurrentText("0 %)
+
 
 class NewProjectWindow(QtWidgets.QWidget):
     def __init__(self, main):

@@ -25,18 +25,25 @@
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">background-color:qlineargradient(spread:pad, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(38, 41, 46, 255), stop:1 rgba(86, 93, 103, 1));
+</string>
+  </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QLabel" name="lbl_test">
     <property name="geometry">
      <rect>
       <x>0</x>
-      <y>480</y>
+      <y>500</y>
       <width>471</width>
       <height>20</height>
      </rect>
     </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: transparent;</string>
+    </property>
     <property name="text">
-     <string>TextLabel</string>
+     <string>Test-lbl</string>
     </property>
    </widget>
    <widget class="QLabel" name="lbl_headline">
@@ -65,6 +72,11 @@
       <pointsize>40</pointsize>
      </font>
     </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(250, 182, 133);
+background-color: transparent;
+</string>
+    </property>
     <property name="text">
      <string>Haushaltsbuch</string>
     </property>
@@ -72,41 +84,49 @@
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
-   <widget class="QWidget" name="layoutWidget">
+   <widget class="QFrame" name="frame2_einkommen">
     <property name="geometry">
      <rect>
       <x>210</x>
       <y>200</y>
-      <width>200</width>
-      <height>221</height>
+      <width>201</width>
+      <height>220</height>
      </rect>
     </property>
-    <property name="minimumSize">
-     <size>
-      <width>200</width>
-      <height>0</height>
-     </size>
+    <property name="layoutDirection">
+     <enum>Qt::LeftToRight</enum>
     </property>
-    <property name="maximumSize">
-     <size>
-      <width>200</width>
-      <height>16777215</height>
-     </size>
+    <property name="autoFillBackground">
+     <bool>false</bool>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(38, 41, 46);</string>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Plain</enum>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout">
      <item>
       <widget class="QLabel" name="einkommen_lbl">
        <property name="minimumSize">
         <size>
-         <width>190</width>
-         <height>0</height>
+         <width>180</width>
+         <height>20</height>
         </size>
        </property>
        <property name="maximumSize">
         <size>
-         <width>190</width>
+         <width>180</width>
          <height>16777215</height>
         </size>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>15</pointsize>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(38, 41, 46);</string>
        </property>
        <property name="text">
         <string>Einkommen</string>
@@ -120,15 +140,18 @@
       <widget class="QDateEdit" name="einkommen_date">
        <property name="minimumSize">
         <size>
-         <width>190</width>
+         <width>180</width>
          <height>0</height>
         </size>
        </property>
        <property name="maximumSize">
         <size>
-         <width>190</width>
+         <width>180</width>
          <height>16777215</height>
         </size>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(38, 41, 46);</string>
        </property>
        <property name="dateTime">
         <datetime>
@@ -146,15 +169,18 @@
       <widget class="QComboBox" name="einkommen_kat">
        <property name="minimumSize">
         <size>
-         <width>200</width>
+         <width>180</width>
          <height>0</height>
         </size>
        </property>
        <property name="maximumSize">
         <size>
-         <width>200</width>
+         <width>180</width>
          <height>16777215</height>
         </size>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(38, 41, 46);</string>
        </property>
        <item>
         <property name="text">
@@ -197,15 +223,18 @@
       <widget class="QLineEdit" name="einkommen_hoehe">
        <property name="minimumSize">
         <size>
-         <width>190</width>
+         <width>180</width>
          <height>0</height>
         </size>
        </property>
        <property name="maximumSize">
         <size>
-         <width>190</width>
+         <width>180</width>
          <height>16777215</height>
         </size>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(38, 41, 46);</string>
        </property>
        <property name="text">
         <string>Höhe</string>
@@ -231,7 +260,7 @@
        </property>
        <property name="sizeHint" stdset="0">
         <size>
-         <width>20</width>
+         <width>197</width>
          <height>40</height>
         </size>
        </property>
@@ -241,15 +270,20 @@
       <widget class="QPushButton" name="btn_add_einkommen">
        <property name="minimumSize">
         <size>
-         <width>190</width>
+         <width>180</width>
          <height>0</height>
         </size>
        </property>
        <property name="maximumSize">
         <size>
-         <width>190</width>
+         <width>180</width>
          <height>16777215</height>
         </size>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(250, 182, 133, 255), stop:1 rgba(229, 137, 71, 1));
+padding: 3px;
+border-radius: 7px;</string>
        </property>
        <property name="text">
         <string>Hinzufügen</string>
@@ -258,41 +292,37 @@
      </item>
     </layout>
    </widget>
-   <widget class="QWidget" name="layoutWidget2">
+   <widget class="QFrame" name="frame2_ausgaben">
     <property name="geometry">
      <rect>
-      <x>490</x>
+      <x>489</x>
       <y>200</y>
-      <width>200</width>
-      <height>222</height>
+      <width>201</width>
+      <height>220</height>
      </rect>
     </property>
-    <property name="minimumSize">
-     <size>
-      <width>200</width>
-      <height>0</height>
-     </size>
-    </property>
-    <property name="maximumSize">
-     <size>
-      <width>200</width>
-      <height>16777215</height>
-     </size>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(38, 41, 46);</string>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout_2">
      <item>
       <widget class="QLabel" name="ausgaben_lbl">
        <property name="minimumSize">
         <size>
-         <width>190</width>
-         <height>0</height>
+         <width>180</width>
+         <height>20</height>
         </size>
        </property>
        <property name="maximumSize">
         <size>
-         <width>190</width>
-         <height>16777215</height>
+         <width>180</width>
+         <height>20</height>
         </size>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>15</pointsize>
+        </font>
        </property>
        <property name="text">
         <string>Ausgaben</string>
@@ -306,13 +336,13 @@
       <widget class="QDateEdit" name="ausgaben_date">
        <property name="minimumSize">
         <size>
-         <width>190</width>
+         <width>180</width>
          <height>0</height>
         </size>
        </property>
        <property name="maximumSize">
         <size>
-         <width>190</width>
+         <width>180</width>
          <height>16777215</height>
         </size>
        </property>
@@ -329,16 +359,16 @@
       </widget>
      </item>
      <item>
-      <widget class="QComboBox" name="ausgaben_kat">
+      <widget class="QComboBox" name="ausgabenKat">
        <property name="minimumSize">
         <size>
-         <width>200</width>
+         <width>180</width>
          <height>0</height>
         </size>
        </property>
        <property name="maximumSize">
         <size>
-         <width>200</width>
+         <width>180</width>
          <height>16777215</height>
         </size>
        </property>
@@ -391,13 +421,13 @@
       <widget class="QLineEdit" name="ausgaben_artikel">
        <property name="minimumSize">
         <size>
-         <width>190</width>
+         <width>180</width>
          <height>0</height>
         </size>
        </property>
        <property name="maximumSize">
         <size>
-         <width>190</width>
+         <width>180</width>
          <height>16777215</height>
         </size>
        </property>
@@ -410,13 +440,13 @@
       <widget class="QLineEdit" name="ausgaben_preis">
        <property name="minimumSize">
         <size>
-         <width>190</width>
+         <width>180</width>
          <height>0</height>
         </size>
        </property>
        <property name="maximumSize">
         <size>
-         <width>190</width>
+         <width>180</width>
          <height>16777215</height>
         </size>
        </property>
@@ -426,16 +456,16 @@
       </widget>
      </item>
      <item>
-      <widget class="QComboBox" name="ausgaben_mwst">
+      <widget class="QComboBox" name="ausgabenMwst">
        <property name="minimumSize">
         <size>
-         <width>200</width>
+         <width>180</width>
          <height>0</height>
         </size>
        </property>
        <property name="maximumSize">
         <size>
-         <width>200</width>
+         <width>180</width>
          <height>16777215</height>
         </size>
        </property>
@@ -465,15 +495,20 @@
       <widget class="QPushButton" name="btn_add_ausgaben">
        <property name="minimumSize">
         <size>
-         <width>190</width>
+         <width>180</width>
          <height>0</height>
         </size>
        </property>
        <property name="maximumSize">
         <size>
-         <width>190</width>
+         <width>180</width>
          <height>16777215</height>
         </size>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(250, 182, 133, 255), stop:1 rgba(229, 137, 71, 1));
+padding: 3px;
+border-radius: 7px;</string>
        </property>
        <property name="text">
         <string>Hinzufügen</string>
@@ -482,6 +517,54 @@
      </item>
     </layout>
    </widget>
+   <widget class="QFrame" name="frame_einkommen">
+    <property name="geometry">
+     <rect>
+      <x>200</x>
+      <y>180</y>
+      <width>221</width>
+      <height>261</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(38, 41, 46);
+alternate-background-color: rgb(38, 41, 46);
+border-style: solid ;
+border-radius: 20px;
+
+
+
+</string>
+    </property>
+   </widget>
+   <widget class="QFrame" name="frame_ausgaben">
+    <property name="geometry">
+     <rect>
+      <x>480</x>
+      <y>180</y>
+      <width>221</width>
+      <height>261</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(38, 41, 46);
+alternate-background-color: rgb(38, 41, 46);
+border-style: solid ;
+border-radius: 20px;</string>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::StyledPanel</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Raised</enum>
+    </property>
+   </widget>
+   <zorder>frame_einkommen</zorder>
+   <zorder>frame_ausgaben</zorder>
+   <zorder>lbl_test</zorder>
+   <zorder>lbl_headline</zorder>
+   <zorder>frame2_einkommen</zorder>
+   <zorder>frame2_ausgaben</zorder>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
@@ -502,7 +585,6 @@
    </widget>
    <addaction name="menu_File"/>
   </widget>
-  <widget class="QStatusBar" name="statusbar"/>
   <action name="actionNew">
    <property name="text">
     <string extracomment="str + N">&amp;new</string>
@@ -541,11 +623,10 @@
   <tabstop>einkommen_date</tabstop>
   <tabstop>einkommen_kat</tabstop>
   <tabstop>einkommen_hoehe</tabstop>
-  <tabstop>ausgaben_date</tabstop>
-  <tabstop>ausgaben_kat</tabstop>
+  <tabstop>ausgabenKat</tabstop>
   <tabstop>ausgaben_artikel</tabstop>
   <tabstop>ausgaben_preis</tabstop>
-  <tabstop>ausgaben_mwst</tabstop>
+  <tabstop>ausgabenMwst</tabstop>
  </tabstops>
  <resources/>
  <connections/>

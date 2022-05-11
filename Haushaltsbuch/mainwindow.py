@@ -115,9 +115,9 @@ class MainFrm(Base, Form):
 
     #@Core.Slot()
     #def on_ausgabenKat_currentTextChanged(self):
-        #match self.ausgabenKat.currentText:
+        #match self.ausgabenKat.currentText():
             #case "Kategorie Auswahl":
-                #self.ausgabenKat.setCurrentText("0 %)
+                #self.ausgabenKat.setCurrentText("0 %")
 
 
 class NewProjectWindow(QtWidgets.QWidget):

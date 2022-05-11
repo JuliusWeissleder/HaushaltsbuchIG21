@@ -22,11 +22,17 @@
     <height>550</height>
    </size>
   </property>
+  <property name="font">
+   <font>
+    <family>Aqua Grotesque</family>
+   </font>
+  </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">background-color:qlineargradient(spread:pad, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(38, 41, 46, 255), stop:1 rgba(86, 93, 103, 1));
+   <string notr="true">background-color:qlineargradient(spread:pad, x1:0.84, y1:1, x2:1, y2:0, stop:0 rgba(38, 41, 46, 200), stop:1 rgba(86, 93, 103, 1));
+
 </string>
   </property>
   <widget class="QWidget" name="centralwidget">
@@ -69,12 +75,18 @@
     </property>
     <property name="font">
      <font>
-      <pointsize>40</pointsize>
+      <family>Aqua Grotesque</family>
+      <pointsize>45</pointsize>
+      <italic>false</italic>
+      <bold>false</bold>
+      <underline>false</underline>
+      <strikeout>false</strikeout>
      </font>
     </property>
     <property name="styleSheet">
      <string notr="true">color: rgb(250, 182, 133);
 background-color: transparent;
+
 </string>
     </property>
     <property name="text">
@@ -90,7 +102,7 @@ background-color: transparent;
       <x>210</x>
       <y>200</y>
       <width>201</width>
-      <height>220</height>
+      <height>221</height>
      </rect>
     </property>
     <property name="layoutDirection">
@@ -147,8 +159,13 @@ background-color: transparent;
        <property name="maximumSize">
         <size>
          <width>180</width>
-         <height>16777215</height>
+         <height>22</height>
         </size>
+       </property>
+       <property name="font">
+        <font>
+         <family>.AppleKoreanFont</family>
+        </font>
        </property>
        <property name="styleSheet">
         <string notr="true">background-color: rgb(38, 41, 46);</string>
@@ -176,8 +193,13 @@ background-color: transparent;
        <property name="maximumSize">
         <size>
          <width>180</width>
-         <height>16777215</height>
+         <height>22</height>
         </size>
+       </property>
+       <property name="font">
+        <font>
+         <family>.AppleKoreanFont</family>
+        </font>
        </property>
        <property name="styleSheet">
         <string notr="true">background-color: rgb(38, 41, 46);</string>
@@ -230,8 +252,13 @@ background-color: transparent;
        <property name="maximumSize">
         <size>
          <width>180</width>
-         <height>16777215</height>
+         <height>22</height>
         </size>
+       </property>
+       <property name="font">
+        <font>
+         <family>.AppleKoreanFont</family>
+        </font>
        </property>
        <property name="styleSheet">
         <string notr="true">background-color: rgb(38, 41, 46);</string>
@@ -277,8 +304,13 @@ background-color: transparent;
        <property name="maximumSize">
         <size>
          <width>180</width>
-         <height>16777215</height>
+         <height>22</height>
         </size>
+       </property>
+       <property name="font">
+        <font>
+         <family>.AppleKoreanFont</family>
+        </font>
        </property>
        <property name="styleSheet">
         <string notr="true">background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(250, 182, 133, 255), stop:1 rgba(229, 137, 71, 1));
@@ -343,8 +375,13 @@ border-radius: 7px;</string>
        <property name="maximumSize">
         <size>
          <width>180</width>
-         <height>16777215</height>
+         <height>22</height>
         </size>
+       </property>
+       <property name="font">
+        <font>
+         <family>.AppleKoreanFont</family>
+        </font>
        </property>
        <property name="dateTime">
         <datetime>
@@ -369,8 +406,13 @@ border-radius: 7px;</string>
        <property name="maximumSize">
         <size>
          <width>180</width>
-         <height>16777215</height>
+         <height>22</height>
         </size>
+       </property>
+       <property name="font">
+        <font>
+         <family>.AppleKoreanFont</family>
+        </font>
        </property>
        <property name="acceptDrops">
         <bool>false</bool>
@@ -428,8 +470,13 @@ border-radius: 7px;</string>
        <property name="maximumSize">
         <size>
          <width>180</width>
-         <height>16777215</height>
+         <height>22</height>
         </size>
+       </property>
+       <property name="font">
+        <font>
+         <family>.AppleKoreanFont</family>
+        </font>
        </property>
        <property name="text">
         <string>Artikel</string>
@@ -447,8 +494,13 @@ border-radius: 7px;</string>
        <property name="maximumSize">
         <size>
          <width>180</width>
-         <height>16777215</height>
+         <height>22</height>
         </size>
+       </property>
+       <property name="font">
+        <font>
+         <family>.AppleKoreanFont</family>
+        </font>
        </property>
        <property name="text">
         <string>Preis</string>
@@ -466,8 +518,13 @@ border-radius: 7px;</string>
        <property name="maximumSize">
         <size>
          <width>180</width>
-         <height>16777215</height>
+         <height>22</height>
         </size>
+       </property>
+       <property name="font">
+        <font>
+         <family>.AppleKoreanFont</family>
+        </font>
        </property>
        <item>
         <property name="text">
@@ -502,8 +559,13 @@ border-radius: 7px;</string>
        <property name="maximumSize">
         <size>
          <width>180</width>
-         <height>16777215</height>
+         <height>22</height>
         </size>
+       </property>
+       <property name="font">
+        <font>
+         <family>.AppleKoreanFont</family>
+        </font>
        </property>
        <property name="styleSheet">
         <string notr="true">background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(250, 182, 133, 255), stop:1 rgba(229, 137, 71, 1));

@@ -88,7 +88,7 @@ class Berechnung(object):
     name: str
     datum: date = date.today()
     author: str = "Kein Author"
-    months: list[Month] = field(default_factory=createMonths())
+    months: list[Month] = field(default_factory=createMonths)
     filename: str = None
 
     def toDict(self):

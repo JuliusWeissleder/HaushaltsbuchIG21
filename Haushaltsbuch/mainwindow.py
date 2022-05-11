@@ -69,11 +69,14 @@ class MainFrm(Base, Form):
             self.berechnung.addEinahme(
                 Einahme(
                     int(self.einkommen_hoehe.text()),
-                    str(self.einkommen_kat.currentText())
+                    str(self.einkommen_kat.currentText()),
+                    datetime.strptime(self.einkommen_date.text(), fmrt).date()
                 )
             )
         except AttributeError:
             self.noProjectExecption()
+        except ValueError as e:
+            print(e)
         self.werteAus()
 
     def newAusgabe(self):
@@ -83,11 +86,14 @@ class MainFrm(Base, Form):
                     int(self.ausgaben_preis.text()),
                     int(str(self.ausgaben_mwst.currentText()).replace("%", "")),
                     str(self.ausgaben_kat.currentText()),
-                    str(self.ausgaben_artikel.text())
+                    str(self.ausgaben_artikel.text()),
+                    datetime.strptime(self.ausgaben_date.text(), fmrt).date()
                 )
             )
         except AttributeError:
             self.noProjectExecption()
+        except ValueError as e:
+            print(e)
         self.werteAus()
 
     def werteAus(self):

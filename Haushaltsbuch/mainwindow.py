@@ -20,6 +20,16 @@ UIFilename = "form.ui"
 ProjectDir = os.path.dirname(os.path.abspath(__file__))
 Form, Base = loadUiType(os.path.join(ProjectDir, UIFilename))
 
+fmrt = "%d.%m.%Y"
+
+
+def checkDate(line: QLineEdit):
+    try:
+        datetime.strptime(line.text(), fmrt)
+        line.setStyleSheet("")
+    except ValueError:
+        line.setStyleSheet("color: red;""text-decoration: underline")
+
 
 class MainFrm(Base, Form):
     def __init__(self, parent=None):
@@ -41,6 +51,9 @@ class MainFrm(Base, Form):
 
         self.btn_add_ausgaben.clicked.connect(self.newAusgabe)
         self.btn_add_einkommen.clicked.connect(self.newEinkommen)
+
+        self.ausgaben_date.textChanged.connect(lambda: checkDate(self.ausgaben_date))
+        self.einkommen_date.textChanged.connect(lambda: checkDate(self.einkommen_date))
 
         self.berechnung = None
 

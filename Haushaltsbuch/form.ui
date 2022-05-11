@@ -149,7 +149,7 @@ background-color: transparent;
       </widget>
      </item>
      <item>
-      <widget class="QDateEdit" name="einkommen_date">
+      <widget class="QLineEdit" name="einkommen_date">
        <property name="minimumSize">
         <size>
          <width>180</width>
@@ -170,15 +170,8 @@ background-color: transparent;
        <property name="styleSheet">
         <string notr="true">background-color: rgb(38, 41, 46);</string>
        </property>
-       <property name="dateTime">
-        <datetime>
-         <hour>0</hour>
-         <minute>0</minute>
-         <second>0</second>
-         <year>2022</year>
-         <month>1</month>
-         <day>1</day>
-        </datetime>
+       <property name="text">
+        <string>Datum</string>
        </property>
       </widget>
      </item>
@@ -365,7 +358,7 @@ border-radius: 7px;</string>
       </widget>
      </item>
      <item>
-      <widget class="QDateEdit" name="ausgaben_date">
+      <widget class="QLineEdit" name="ausgaben_date">
        <property name="minimumSize">
         <size>
          <width>180</width>
@@ -383,15 +376,8 @@ border-radius: 7px;</string>
          <family>.AppleKoreanFont</family>
         </font>
        </property>
-       <property name="dateTime">
-        <datetime>
-         <hour>0</hour>
-         <minute>0</minute>
-         <second>0</second>
-         <year>2022</year>
-         <month>1</month>
-         <day>1</day>
-        </datetime>
+       <property name="text">
+        <string>Datum</string>
        </property>
       </widget>
      </item>

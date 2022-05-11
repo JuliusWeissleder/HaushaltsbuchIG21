@@ -1,24 +1,23 @@
 from dataclasses import dataclass, field
 from datetime import date, datetime
-from dataclasses import field
-from calendar import month_name as months
-
+from calendar import month_name as ms
 
 frmt = "%Y-%m-%d"
 
+
 def createMonths():
     m = Month(0)
-    return [m].append([Month(i, months[i]) for i in range(0, 13)])
+    return [m].__add__([Month(i, ms[i], m) for i in range(1, 13)])
+
 
 @dataclass
 class Ausgabe(object):
     wert: int
-    mwst: str
+    mwst: int
     katagorie: str
     artikel: str
-    name: str = None
-    menge: int = None
     datum: date = date.today()
+    menge: int = None
 
     def toDict(self):
         newdict = self.__dict__.copy()
@@ -40,7 +39,6 @@ class Ausgabe(object):
 class Einahme(object):
     wert: int
     katagorie: str
-    name: str = None
     datum: date = date.today()
 
     def toDict(self):
@@ -57,9 +55,37 @@ class Einahme(object):
 class Month(object):
     id: int 
     name: str = "Monthly"
-    monthly = None
     einnahmen: list[Einahme] = field(default_factory=list)
     ausgaben: list[Ausgabe] = field(default_factory=list)
+
+    def getDifferenz(self) -> int:
+        geldEinnahmen = 0
+        for e in self.einnahmen:
+            geldEinnahmen += e.wert
+        geldAusgaben = 0
+        for a in self.ausgaben:
+            geldAusgaben += a.wert
+        if self.monthly is None:
+            return geldEinnahmen - geldAusgaben
+        else:
+            return self.monthly.getDifferenz() + geldEinnahmen - geldAusgaben
+
+    def sortAusgabenBy(self, key: str):
+        unsortedDict = {a.__dict__[key]: [] for a in self.ausgaben if a.__dict__[key] is not None}
+        for a in self.ausgaben:
+            if a.__dict__[key] is not None:
+                unsortedDict[a.__dict__[key]].append(a)
+        sortedList = []
+        for l in [unsortedDict[k] for k in sorted(unsortedDict.keys())]:
+            sortedList.append(l)
+        return sortedList
+
+    def addEinahme(self, e: Einahme):
+        self.einnahmen.append(e)
+
+    def addAusgabe(self, a: Ausgabe):
+        self.ausgaben.append(a)
+
     def toDict(self):
         newdict = self.__dict__.copy()
         newdict["einnahmen"] = [e.toDict() for e in self.einnahmen]
@@ -70,17 +96,6 @@ class Month(object):
         d["einnahmen"] = [Einahme.fromDict(e) for e in d["einnahmen"]]
         d["ausgaben"] = [Ausgabe.fromDict(e) for e in d["ausgaben"]]
         return Month(**d)
-
-    def getDifferenz(self) -> int:
-        geldEinnahmen = 0
-        for e in self.einnahmen:
-            geldEinnahmen += e.wert
-
-        geldAusgaben = 0
-        for a in self.ausgaben:
-            geldAusgaben += a.wert
-
-        return geldEinnahmen - geldAusgaben
 
 
 @dataclass
@@ -103,18 +118,13 @@ class Berechnung(object):
         return Berechnung(**d)
 
     def addEinahme(self, e: Einahme):
-        self.einnahmen.append(e)
+        self.months[e.datum.month].addEinahme(e)
 
     def addAusgabe(self, a: Ausgabe):
-        self.ausgaben.append(a)
+        self.months[a.datum.month].addAusgabe(a)
 
     def getDifferenz(self) -> int:
-        geldEinnahmen = 0
-        for e in self.einnahmen:
-            geldEinnahmen += e.wert
-
-        geldAusgaben = 0
-        for a in self.ausgaben:
-            geldAusgaben += a.wert
-
-        return geldEinnahmen - geldAusgaben
+        differenz = 0
+        for m in [m for m in self.months if 0 != m.id]:
+            differenz += m.getDifferenz()
+        return differenz

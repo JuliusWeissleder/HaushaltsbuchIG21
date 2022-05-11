@@ -10,6 +10,17 @@ def createMonths():
     return [m].__add__([Month(i, ms[i], m) for i in range(1, 13)])
 
 
+def sort(ltosort, key: str):
+    unsorteddict = {a.__dict__[key]: [] for a in ltosort if a.__dict__[key] is not None}
+    for a in ltosort:
+        if a.__dict__[key] is not None:
+            unsorteddict[a.__dict__[key]].append(a)
+    sortedlist = []
+    for l in [unsorteddict[k] for k in sorted(unsorteddict.keys())]:
+        sortedlist.append(l)
+    return sortedlist
+
+
 @dataclass
 class Ausgabe(object):
     wert: int
@@ -19,6 +30,12 @@ class Ausgabe(object):
     datum: date = date.today()
     menge: int = None
 
+    def getSteuern(self):
+        return self.wert/(100+self.mwst)*self.mwst
+
+    def getNetto(self):
+        return self.wert / (100 + self.mwst) * 100
+
     def toDict(self):
         newdict = self.__dict__.copy()
         newdict["datum"] = self.datum.strftime(frmt)
@@ -27,12 +44,6 @@ class Ausgabe(object):
     def fromDict(d: dict):
         d["datum"] = datetime.strptime(d["datum"], frmt).date()
         return Ausgabe(**d)
-
-    def getSteuern(self):
-        return self.wert/(100+self.mwst)*self.mwst
-
-    def getNetto(self):
-        return self.wert / (100 + self.mwst) * 100
 
 
 @dataclass
@@ -51,10 +62,15 @@ class Einahme(object):
         return Einahme(**d)
 
 
+class Month(object):
+    pass
+
+
 @dataclass
 class Month(object):
     id: int 
     name: str = "Monthly"
+    monthly: Month = None
     einnahmen: list[Einahme] = field(default_factory=list)
     ausgaben: list[Ausgabe] = field(default_factory=list)
 
@@ -70,25 +86,11 @@ class Month(object):
         else:
             return self.monthly.getDifferenz() + geldEinnahmen - geldAusgaben
 
-    def sortAusgabenBy(self, key: str):
-        unsortedDict = {a.__dict__[key]: [] for a in self.ausgaben if a.__dict__[key] is not None}
-        for a in self.ausgaben:
-            if a.__dict__[key] is not None:
-                unsortedDict[a.__dict__[key]].append(a)
-        sortedList = []
-        for l in [unsortedDict[k] for k in sorted(unsortedDict.keys())]:
-            sortedList.append(l)
-        return sortedList
+    def getSortedAusgabenBy(self, key: str):
+        return sort(self.ausgaben, key)
 
-    def sortEinnahmenBy(self, key: str):
-        unsorteddict = {e.__dict__[key]: [] for e in self.einnahmen if e.__dict__[key] is not None}
-        for e in self.einnahmen:
-            if e.__dict__[key] is not None:
-                unsorteddict[e.__dict__[key]].append(e)
-        sortedlist = []
-        for l in [unsorteddict[k] for k in sorted(unsorteddict)]:
-            sortedlist.append(l)
-        return sortedlist
+    def getSortedEinnahmenBy(self, key: str):
+        return sort(self.einnahmen, key)
 
     def addEinahme(self, e: Einahme):
         self.einnahmen.append(e)

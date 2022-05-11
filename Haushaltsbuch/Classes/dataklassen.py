@@ -80,6 +80,16 @@ class Month(object):
             sortedList.append(l)
         return sortedList
 
+    def sortEinnahmenBy(self, key: str):
+        unsorteddict = {e.__dict__[key]: [] for e in self.einnahmen if e.__dict__[key] is not None}
+        for e in self.einnahmen:
+            if e.__dict__[key] is not None:
+                unsorteddict[e.__dict__[key]].append(e)
+        sortedlist = []
+        for l in [unsorteddict[k] for k in sorted(unsorteddict)]:
+            sortedlist.append(l)
+        return sortedlist
+
     def addEinahme(self, e: Einahme):
         self.einnahmen.append(e)
 
@@ -106,17 +116,6 @@ class Berechnung(object):
     months: list[Month] = field(default_factory=createMonths)
     filename: str = None
 
-    def toDict(self):
-        newdict = self.__dict__.copy()
-        newdict["datum"] = self.datum.strftime(frmt)
-        newdict["months"] = [m.toDict() for m in self.months]
-        return newdict
-
-    def fromDict(d: dict):
-        d["datum"] = datetime.strptime(d["datum"], frmt).date()
-        d["months"] = [Month.fromDict(m) for m in d["months"]]
-        return Berechnung(**d)
-
     def addEinahme(self, e: Einahme):
         self.months[e.datum.month].addEinahme(e)
 
@@ -128,3 +127,14 @@ class Berechnung(object):
         for m in [m for m in self.months if 0 != m.id]:
             differenz += m.getDifferenz()
         return differenz
+
+    def toDict(self):
+        newdict = self.__dict__.copy()
+        newdict["datum"] = self.datum.strftime(frmt)
+        newdict["months"] = [m.toDict() for m in self.months]
+        return newdict
+
+    def fromDict(d: dict):
+        d["datum"] = datetime.strptime(d["datum"], frmt).date()
+        d["months"] = [Month.fromDict(m) for m in d["months"]]
+        return Berechnung(**d)

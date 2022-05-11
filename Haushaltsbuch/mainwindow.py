@@ -68,7 +68,7 @@ class MainFrm(Base, Form):
         try:
             self.berechnung.addEinahme(
                 Einahme(
-                    int(self.einkommen_hoehe.text()),
+                    float(self.einkommen_hoehe.text()),
                     str(self.einkommen_kat.currentText()),
                     datetime.strptime(self.einkommen_date.text(), fmrt).date()
                 )
@@ -83,7 +83,7 @@ class MainFrm(Base, Form):
         try:
             self.berechnung.addAusgabe(
                 Ausgabe(
-                    int(self.ausgaben_preis.text()),
+                    float(self.ausgaben_preis.text()),
                     int(str(self.ausgaben_mwst.currentText()).replace("%", "")),
                     str(self.ausgaben_kat.currentText()),
                     str(self.ausgaben_artikel.text()),

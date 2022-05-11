@@ -23,7 +23,7 @@ def sort(ltosort, key: str):
 
 @dataclass
 class Ausgabe(object):
-    wert: int
+    wert: float
     mwst: int
     katagorie: str
     artikel: str
@@ -48,7 +48,7 @@ class Ausgabe(object):
 
 @dataclass
 class Einahme(object):
-    wert: int
+    wert: float
     katagorie: str
     datum: date = date.today()
 

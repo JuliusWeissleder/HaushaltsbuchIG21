@@ -1,14 +1,14 @@
 from dataclasses import dataclass, field
 from datetime import date, datetime
-from dataclasses import fiel
+from dataclasses import field
 from calendar import month_name as months
 
 
 frmt = "%Y-%m-%d"
 
-
-def simple(o):
-    return type(o) in [type(str()), type(int()), type(float()), type(bool()), type(None)]
+def createMonths():
+    m = Month(0)
+    return [m].append([Month(i, months[i]) for i in range(0, 13)])
 
 @dataclass
 class Ausgabe(object):
@@ -28,6 +28,13 @@ class Ausgabe(object):
     def fromDict(d: dict):
         d["datum"] = datetime.strptime(d["datum"], frmt).date()
         return Ausgabe(**d)
+
+    def getSteuern(self):
+        return self.wert/(100+self.mwst)*self.mwst
+
+    def getNetto(self):
+        return self.wert / (100 + self.mwst) * 100
+
 
 @dataclass
 class Einahme(object):
@@ -50,9 +57,9 @@ class Einahme(object):
 class Month(object):
     id: int 
     name: str = "Monthly"
+    monthly = None
     einnahmen: list[Einahme] = field(default_factory=list)
     ausgaben: list[Ausgabe] = field(default_factory=list)
-
     def toDict(self):
         newdict = self.__dict__.copy()
         newdict["einnahmen"] = [e.toDict() for e in self.einnahmen]
@@ -64,12 +71,24 @@ class Month(object):
         d["ausgaben"] = [Ausgabe.fromDict(e) for e in d["ausgaben"]]
         return Month(**d)
 
+    def getDifferenz(self) -> int:
+        geldEinnahmen = 0
+        for e in self.einnahmen:
+            geldEinnahmen += e.wert
+
+        geldAusgaben = 0
+        for a in self.ausgaben:
+            geldAusgaben += a.wert
+
+        return geldEinnahmen - geldAusgaben
+
+
 @dataclass
 class Berechnung(object):
     name: str
     datum: date = date.today()
     author: str = "Kein Author"
-    months: list[Month] = field(default_factory=list)
+    months: list[Month] = field(default_factory=createMonths())
     filename: str = None
 
     def toDict(self):
@@ -80,7 +99,7 @@ class Berechnung(object):
 
     def fromDict(d: dict):
         d["datum"] = datetime.strptime(d["datum"], frmt).date()
-        d["einnahmen"] = [Month.fromDict(m) for m in d["months"]]
+        d["months"] = [Month.fromDict(m) for m in d["months"]]
         return Berechnung(**d)
 
     def addEinahme(self, e: Einahme):
@@ -99,6 +118,3 @@ class Berechnung(object):
             geldAusgaben += a.wert
 
         return geldEinnahmen - geldAusgaben
-
-    def createMonths():
-        return [Month(i, months[i]) for i in range(0, 13)]

@@ -64,6 +64,8 @@ class MainFrm(Base, Form):
             "U haven't created a Projekt yet.\n Create one with File -> new",
         )
 
+
+
     def newEinkommen(self):
         try:
             self.berechnung.addEinahme(

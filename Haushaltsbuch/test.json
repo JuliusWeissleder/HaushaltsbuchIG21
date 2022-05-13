@@ -1,0 +1,57 @@
+{
+    "name": "Name des Projektes",
+    "datum": "2022-05-06",
+    "author": "Author des Projektes",
+    "einnahmen": [
+        {
+            "wert": 10,
+            "katagorie": "Kategorie Auswahl",
+            "name": null,
+            "datum": "2022-05-06"
+        },
+        {
+            "wert": 10,
+            "katagorie": "Kategorie Auswahl",
+            "name": null,
+            "datum": "2022-05-06"
+        },
+        {
+            "wert": 10,
+            "katagorie": "Kategorie Auswahl",
+            "name": null,
+            "datum": "2022-05-06"
+        },
+        {
+            "wert": 10,
+            "katagorie": "Kategorie Auswahl",
+            "name": null,
+            "datum": "2022-05-06"
+        },
+        {
+            "wert": 10,
+            "katagorie": "Kategorie Auswahl",
+            "name": null,
+            "datum": "2022-05-06"
+        },
+        {
+            "wert": 10,
+            "katagorie": "Kategorie Auswahl",
+            "name": null,
+            "datum": "2022-05-06"
+        },
+        {
+            "wert": 10,
+            "katagorie": "Kategorie Auswahl",
+            "name": null,
+            "datum": "2022-05-06"
+        },
+        {
+            "wert": 5,
+            "katagorie": "Kategorie Auswahl",
+            "name": null,
+            "datum": "2022-05-06"
+        }
+    ],
+    "ausgaben": [],
+    "filename": "C:/Users/CHr/Haushaltsbuch/Haushaltsbuch/test.json"
+}
